@@ -1,0 +1,16 @@
+<div class="text-center">
+  <%= image_tag "https://png.icons8.com/ios/100/000000/password.png", size: "100x100", class: "p-3" %>
+
+  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+  <%= form_with(url: url_for(action: :create), class: 'form-signin') do |f| %>
+
+    <%= f.text_field :username, class: 'form-control', placeholder: 'Username' %>
+    <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
+
+    <br />
+
+    <%= f.submit 'Login', class: 'btn btn-lg btn-primary btn-block' %>
+
+  <% end %>
+</div>

@@ -1,4 +1,9 @@
 class TagsController < ApplicationController
+  before_action do
+    Repository.token = session[:auth_token]
+    Tag.token = session[:auth_token]
+  end
+
   before_action :find_tag
 
   def show

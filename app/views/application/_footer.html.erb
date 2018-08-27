@@ -1,3 +1,7 @@
+<%= debug session[:auth_options] %>
+<%= debug session[:back_url] %>
+<%= debug JWT.decode session[:auth_token], nil, false if session[:auth_token] %>
+
 <footer class="fixed-bottom bg-light border-top p-4">
   <div class="container text-center text-dark-50 small">
     <div class="d-flex justify-content-between">

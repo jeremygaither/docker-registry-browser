@@ -2,10 +2,12 @@ class Tag < Resource
   include ActiveModel::Model
 
   attr_accessor :repository, :name, :content_digest, :layers
+  mattr_accessor :token
 
   def self.find(repository:, name:)
     response = client.get "/v2/#{repository.name}/manifests/#{name}" do |request|
       request.headers["Accept"] = "application/vnd.docker.distribution.manifest.v2+json"
+      request.headers["Authorization"] = "Bearer #{token}"
     end
 
     layers = if response.headers["content-type"] =~ /v2/

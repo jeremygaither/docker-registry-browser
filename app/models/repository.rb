@@ -2,9 +2,12 @@ class Repository < Resource
   include ActiveModel::Model
 
   attr_accessor :name, :tags
+  mattr_accessor :token
 
   def self.list(count: 100, last: nil)
-    response = client.get "/v2/_catalog", { n: count, last: last }.compact
+    response = client.get "/v2/_catalog", { n: count, last: last }.compact do |req|
+      req.headers['Authorization'] = "Bearer #{token}"
+    end
     entries  = response.body["repositories"].map { |name| new(name: name) }
 
     Collection.new entries: entries, more: response.headers.has_key?("Link")
@@ -12,7 +15,9 @@ class Repository < Resource
 
   def self.find(name)
     begin
-      response = client.get "/v2/#{name}/tags/list"
+      response = client.get "/v2/#{name}/tags/list" do |req|
+        req.headers['Authorization'] = "Bearer #{token}"
+      end
       tags     = response.body["tags"]
     rescue Faraday::ResourceNotFound => e
       tags = nil
@@ -32,4 +37,3 @@ class Repository < Resource
     name.split("/").last
   end
 end
-

@@ -78,3 +78,6 @@ group :test do
   gem 'webmock'
   gem 'vcr'
 end
+
+# temp
+gem 'jwt'

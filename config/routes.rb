@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root to: 'repositories#index'
 
+  namespace :auth do
+    resource :token, only: [:new, :create]
+  end
+
   get 'repo/*repo/tag/*tag', to: 'tags#show',         as: :tag       , constraints: { repo: /.+/, tag: /[^\/]+/ }
   get 'repo/*repo',          to: 'repositories#show', as: :repository, constraints: { repo: /.+/ }
 
